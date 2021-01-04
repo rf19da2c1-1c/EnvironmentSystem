@@ -40,9 +40,19 @@ namespace UDPReceiver
                 Console.WriteLine("Temperaturen er målt til " + temp);
 
                 // pressure strs[1]
+                string presStr = strs[1].Trim();
+                Console.WriteLine(presStr);
+                string[] press = presStr.Split('=');
+                double pres = Convert.ToDouble(press[1]);
+                Console.WriteLine("Pressure er målt til " + pres);
+
 
                 // Humidity strs[2]
-
+                string humStr = strs[2].Trim();
+                Console.WriteLine(humStr);
+                string[] hums = humStr.Split('=');
+                double hum = Convert.ToDouble(hums[1]);
+                Console.WriteLine("Humidity er målt til " + hum);
             }
         }
     }

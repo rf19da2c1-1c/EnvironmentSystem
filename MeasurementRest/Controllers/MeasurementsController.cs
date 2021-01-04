@@ -60,5 +60,25 @@ namespace MeasurementRest.Controllers
                 return NotFound(knfe.Message);
             }
         }
+
+
+        // PUT api/<MeasurementsController>/5
+        /*
+         * Not part of the assignment but for demonstration of update
+         */
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult Update(int id, [FromBody] Measurement m)
+        {
+            try
+            {
+                mgr.Update(id, m);
+                return Ok();
+            }
+            catch (KeyNotFoundException knfe)
+            {
+                return NotFound(knfe.Message);
+            }
+        }
     }
 }

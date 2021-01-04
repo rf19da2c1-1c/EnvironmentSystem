@@ -98,6 +98,33 @@ namespace MeasurementRest.Managers
             return meas;
         }
 
+        private const String UPDATE = "UPDATE Measurement set temp=@TEMP, pres=@PRES, hum=@HUM, MTime=@MTIME where id=@ID";
+        public void Update(int id, Measurement measurement)
+        {
+            Measurement meas = GetById(id);
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(UPDATE, conn))
+            {
+                conn.Open();
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@TEMP", measurement.Temperature);
+                cmd.Parameters.AddWithValue("@PRES", measurement.Pressure);
+                cmd.Parameters.AddWithValue("@HUM", measurement.Humidity);
+                cmd.Parameters.AddWithValue("@MTIME", measurement.TimeStamp);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+                // evt. return rowsAffected == 1 => true if inserted otherwise false
+
+                if (rowsAffected != 1)
+                {
+                    throw new KeyNotFoundException("Id not found was " + id);
+                }
+            }
+
+            
+        }
+
 
         private Measurement ReadNextElement(SqlDataReader reader)
         {
